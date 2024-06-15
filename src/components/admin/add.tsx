@@ -3,18 +3,28 @@ import React, { useState } from "react";
 import { addProduct } from "../../service/products";
 import { Iproduct } from "../../interface/products";
 import { useNavigate } from "react-router-dom";
-
+import { Button, message } from "antd";
+import { upload } from "../../service/upload";
+import { url } from "inspector";
 type Props = {};
-
+type LabelRender = SelectProps["labelRender"];
 const Add = (props: Props) => {
-  const [Name, setName] = useState<string>("");
-  const [Price, setPrice] = useState<number>(0);
-  const [Img, setImg] = useState<string>("");
-  const [Category, setCategory] = useState<string>("");
-  const [ Products, setProducts] = useState<Iproduct[]>([])
+  const [name, setName] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [img, setImg] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [products, setProducts] = useState<Iproduct[]>([]);
+  const [messageApi, contextHolder] = message.useMessage();
+  const [tailen, setTailen] = useState<any>(null)
   const navigate = useNavigate();
+  const [form] = Form.useForm();
 
-  type LabelRender = SelectProps["labelRender"];
+  const info = () => {
+    messageApi.open({
+      type: "success",
+      content: "Product added successfully",
+    });
+  };
 
   const options = [
     { label: "Tea", value: "Tea" },
@@ -30,94 +40,118 @@ const Add = (props: Props) => {
     }
     return <span>Please choose the type of drink: </span>;
   };
-  const onFinish = async (values : any) => {
-    console.log('Success:', values);
+
+  const uploadImage = async (files:any) => {
+    const formdata = new FormData()
+    formdata.append('images', files)
+    const upImage = await upload (formdata)
+    console.log(upImage.payload[0].url);
+    return upImage.payload[0].url
     
-    const product = await addProduct(values)
+  }
+
+
+
+  const onFinish = async (values: any) => {
+    console.log("Success:", values);
+     const fileResult = await uploadImage(tailen)
+    const payload =  {
+      ...values,
+      img : fileResult 
+    }
+    const product = await addProduct(payload);
     console.log(product);
-    
-    const newproducts = [product]
-    setProducts(newproducts)
-    setName('')
-    setImg('')
-    setPrice(0)
-    setCategory('')
-  
-    navigate('/admin/success')
-  
-    
-  
-  
+
+    const newproducts = [product];
+    setProducts(newproducts);
+    setName("");
+    setImg("");
+    setPrice(0);
+    setCategory("");
+    info();
+
+    form.resetFields();
+
   };
   return (
     <>
+      {contextHolder}
       <div className="space-y-6 font-[sans-serif] max-w-md mx-auto">
-        <Form  onFinish={onFinish} >
+        <Form form={form} initialValues={{ category: "1" }} onFinish={onFinish}>
           <div>
             <label className="mb-2 text-2xl text-black block">
               Coffee name:
             </label>
             <Form.Item
-             
-              name="Name"
+              name="name"
               rules={[
                 { required: true, message: "Please input your Coffeename!" },
               ]}
             >
-              <Input className="pr-4 pl-14 py-3 text-sm text-black rounded bg-white border border-gray-400 w-full outline-[#333]"
-              placeholder="Enter Coffee name"/>
+              <Input
+                className="pr-4 pl-14 py-3 text-sm text-black rounded bg-white border border-gray-400 w-full outline-[#333]"
+                placeholder="Enter Coffee name"
+              />
             </Form.Item>
           </div>
           <div>
-
-
             <label className="mb-2 text-sm text-black block">
               Your price ($):
             </label>
             <div className="relative flex items-center">
-            <Form.Item
-             
-             name="Price"
-             rules={[
-               { required: true, message: "Please input your Coffee price!" },
-             ]}
-           >
-             <Input className="pr-4 pl-14 py-3 text-sm text-black rounded bg-white border border-gray-400 w-full outline-[#333]"
-             placeholder="Enter Price $$$"/>
-           </Form.Item>
+              <Form.Item
+                name="price"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Coffee price!",
+                  },
+                ]}
+              >
+                <Input
+                  className="pr-4 pl-14 py-3 text-sm text-black rounded bg-white border border-gray-400 w-full outline-[#333]"
+                  placeholder="Enter Price $$$"
+                />
+              </Form.Item>
               <div className="absolute left-4"></div>
             </div>
 
-
             <label className="mb-2 text-sm text-black block">Your Image:</label>
             <div className="relative flex items-center">
-            <Form.Item
-             
-             name="Img"
-             rules={[
-               { required: true, message: "Please input your Coffee image!" },
-             ]}
-           >
-             <Input className="pr-4 pl-14 py-3 text-sm text-black rounded bg-white border border-gray-400 w-full outline-[#333]"
-             placeholder="Enter Coffee image"/>
-           </Form.Item>
+              <Form.Item
+                name="img"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Coffee image!",
+                  },
+                ]}
+              >
+                <Input
+                type="file"
+                onChange={(e:any)=>{setTailen(e.target.files[0])}}
+                  className="pr-4 pl-14 py-3 text-sm text-black rounded bg-white border border-gray-400 w-full outline-[#333]"
+                  placeholder="Enter Coffee image"
+                />
+              </Form.Item>
               <div className="absolute left-4"></div>
             </div>
 
             <div className="pt-[20px]">
-            <Form.Item
-             
-             name="Category"
-             rules={[
-               { required: true, message: "Please input your Coffee image!" },
-             ]}
-           >
-              <Select
-                labelRender={labelRender}
-                defaultValue="1"
-                style={{ width: "100%" }}
-                options={options}
-              />
+              <Form.Item
+                name="category"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Coffee Type!",
+                  },
+                ]}
+              >
+                <Select
+                  labelRender={labelRender}
+                  style={{ width: "100%" }}
+                  options={options}
+                />
               </Form.Item>
             </div>
           </div>
@@ -134,4 +168,3 @@ const Add = (props: Props) => {
 };
 
 export default Add;
-

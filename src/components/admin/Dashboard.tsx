@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { DeleteProduct, getAllproducts } from "../../service/products";
 import { Iproduct } from "../../interface/products";
 import { Popconfirm } from "antd";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Update from "./update";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
   const [products, setProduct] = useState([]);
   const param = useParams();
+  const navigate = useNavigate();
 
   console.log(param);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,16 +27,16 @@ const Dashboard = (props: Props) => {
   }, []);
 
   const delProduct = async (id: string) => {
-    
-   
-      await DeleteProduct(id);
-      const newproduct = products.filter(
-        (product: Iproduct) => product._id !== id
-      );
-      console.log(id);
-      setProduct(newproduct)
+    await DeleteProduct(id);
+    const newproduct = products.filter(
+      (product: Iproduct) => product._id !== id
+    );
+    console.log(id);
+    setProduct(newproduct);
+  };
 
-    
+  const updateProduct = (id: string) => {
+    navigate(`update/${id}`);
   };
 
   return (
@@ -67,23 +69,25 @@ const Dashboard = (props: Props) => {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  {product.Name}
+                  {product.name}
                 </th>
-                <td className="px-6 py-4">{product.Category}</td>
-                <td className="px-6 py-4">${product.Price}</td>
+                <td className="px-6 py-4">{product.category}</td>
+                <td className="px-6 py-4">${product.price}</td>
                 <td className="px-6 py-4">
                   <div className="flex">
                     <button
+                      onClick={() => updateProduct(product._id)}
                       type="button"
-                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                      className="focus:outline-none text-white bg-sky-600 hover:bg-sky-900 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
                     >
                       Edit
                     </button>
-
                     <Popconfirm
                       title="Delete the task"
                       description="Are you sure to delete this task?"
-                      onConfirm={() =>  {delProduct(product._id)}}
+                      onConfirm={() => {
+                        delProduct(product._id);
+                      }}
                       // onCancel={cancel}
                       okText="Yes"
                       cancelText="No"

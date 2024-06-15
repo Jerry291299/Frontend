@@ -68,17 +68,17 @@ const Content = (props: Props) => {
                   </div>
                   <div className="w-2/3 h-[220px] overflow-hidden mx-auto aspect-w-16 aspect-h-8">
                     <img
-                      src= {product.Img}
+                      src= {product.img}
                       alt="Product 1"
                       className="h-full w-full object-contain"
                     />
                   </div>
                   <div className="text-center mt-4">
                     <h3 className="text-lg font-extrabold text-gray-800">
-                      {product.Name}
+                      {product.name}
                     </h3>
                     <h4 className="text-2xl text-gray-800 font-bold mt-4">
-                      ${product.Price}
+                      ${product.price}
                       {/* <span className="text-gray-400 ml-2 font-medium">$15</span> */}
                     </h4>
                     <button

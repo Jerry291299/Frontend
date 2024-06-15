@@ -1,9 +1,15 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 
 type Props = {}
 
 const Navbar = (props: Props) => {
+  const location = useLocation()
+  const [active, setActive ]= useState("")
+  useEffect(()=> {
+    console.log(location);
+    setActive(location.pathname)
+  },[location])
   return (
 <>
 <nav className="bg-[#121e31] h-screen  top-0 left-0 min-w-[250px] py-6 px-4 font-[sans-serif] tracking-wide overflow-auto">
@@ -20,7 +26,9 @@ const Navbar = (props: Props) => {
   <hr className="my-6 border-gray-400" />
   <ul className="space-y-3">
     <li>
-    <NavLink to={'/admin/dashboard'} className="text-white text-sm flex items-center hover:bg-gray-700 rounded px-4 py-3 transition-all">
+    <NavLink to={'/admin/dashboard'} className={`text-white text-sm flex items-center hover:bg-gray-700 rounded px-4 py-3 transition-all 
+      ${active === '/admin/dashboard'? 'bg-gray-700':''}`}>
+
      
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +46,8 @@ const Navbar = (props: Props) => {
       </NavLink>
     </li>
     <li>
-    <NavLink to={'/admin/add'} className="text-white text-sm flex items-center hover:bg-gray-700 rounded px-4 py-3 transition-all">
+    <NavLink to={'/admin/add'} className={`text-white text-sm flex items-center hover:bg-gray-700 rounded px-4 py-3 transition-all
+      ${active === '/admin/add'? 'bg-gray-700':''}`}>
       
         <svg
           xmlns="http://www.w3.org/2000/svg"

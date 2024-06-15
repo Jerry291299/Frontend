@@ -11,6 +11,15 @@ export const getAllproducts = async () => {
     console.log(error);
   }
 }
+export const getProductByID = async(id?:string) =>{
+  try {
+    const {data} = await axiosservice.get(`/product/${id}`)
+    return data
+  } catch (error){
+    console.log(error);
+    
+  }
+}
 
 export const addProduct = async(product:IProductLite) => {
     try {
@@ -24,7 +33,7 @@ export const addProduct = async(product:IProductLite) => {
 
 export const updateProduct = async(id?:string,   product?: IProductLite) => {
   try {
-    const {data} = await axiosservice.put(`/product/${id}`, product)
+    const {data} = await axiosservice.put(`/update/${id}`, product)
     return data
   } catch (error) {
     console.log(error);

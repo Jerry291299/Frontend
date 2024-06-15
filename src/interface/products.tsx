@@ -1,8 +1,8 @@
 export interface Iproduct{
     _id: string,
-    Name: string,
-    Img: string,
-    Price: number,
-    Category: string,
+    name: string,
+    img: string,
+    price: number,
+    category: string,
 }
-export type IProductLite = Pick<Iproduct,'Name'| 'Img' | 'Price'|'Category' >
+export type IProductLite = Pick<Iproduct,'name'| 'img' | 'price'|'category' >

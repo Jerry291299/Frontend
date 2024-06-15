@@ -7,8 +7,8 @@ import content from "./components/content";
 import Admin from "./layout/Admin";
 import Dashboard from "./components/admin/Dashboard";
 import Add from "./components/admin/add";
-import update from "./components/admin/update";
-import success from "./components/admin/success";
+import Update from "./components/admin/update";
+
 
 function App() {
   return (
@@ -22,8 +22,8 @@ function App() {
           <Route path="/admin" Component={Admin}>
             <Route path="dashboard" Component={Dashboard}></Route>
             <Route path="add" Component={Add}></Route>
-            <Route path="dashboard/update/:id" Component={update}></Route>
-            <Route path="success" Component={success}></Route>
+            <Route path="dashboard/update/:id" Component={Update}></Route>
+            
           </Route>
         </Routes>
       </BrowserRouter>
