@@ -1,5 +1,6 @@
 import React from 'react'
-
+import { NavLink } from 'react-router-dom'
+import logo from'./img/Corgi Toys 1980.png'
 type Props = {}
 
 const footer = (props: Props) => {
@@ -8,18 +9,14 @@ const footer = (props: Props) => {
     <footer className="bg-gray-900 p-10 font-[sans-serif] tracking-wide">
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
     <div className="lg:flex lg:items-center">
-      <a href="javascript:void(0)">
-        <img
-          src="https://readymadeui.com/readymadeui-light.svg"
-          alt="logo"
-          className="w-52"
-        />
-      </a>
+    <NavLink to={"/"}>
+            <img src={logo} alt="logo" className="w-[70%]  " />
+          </NavLink>
     </div>
     <div className="lg:flex lg:items-center">
       <ul className="flex space-x-6">
         <li>
-          <a href="javascript:void(0)">
+          <a href="#">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="fill-gray-300 hover:fill-white w-7 h-7"
@@ -34,7 +31,7 @@ const footer = (props: Props) => {
           </a>
         </li>
         <li>
-          <a href="javascript:void(0)">
+          <a href="#">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="fill-gray-300 hover:fill-white w-7 h-7"
@@ -49,7 +46,7 @@ const footer = (props: Props) => {
           </a>
         </li>
         <li>
-          <a href="javascript:void(0)">
+          <a href="#">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -67,7 +64,7 @@ const footer = (props: Props) => {
       <ul className="space-y-4">
         <li>
           <a
-            href="javascript:void(0)"
+            href="#"
             className="text-gray-300 hover:text-white text-sm"
           >
             Email
@@ -75,7 +72,7 @@ const footer = (props: Props) => {
         </li>
         <li>
           <a
-            href="javascript:void(0)"
+            href="#"
             className="text-gray-300 hover:text-white text-sm"
           >
             Phone
@@ -83,7 +80,7 @@ const footer = (props: Props) => {
         </li>
         <li>
           <a
-            href="javascript:void(0)"
+            href="#"
             className="text-gray-300 hover:text-white text-sm"
           >
             Address
@@ -96,7 +93,7 @@ const footer = (props: Props) => {
       <ul className="space-y-4">
         <li>
           <a
-            href="javascript:void(0)"
+            href="#"
             className="text-gray-300 hover:text-white text-sm"
           >
             About Us
@@ -104,7 +101,7 @@ const footer = (props: Props) => {
         </li>
         <li>
           <a
-            href="javascript:void(0)"
+            href="#"
             className="text-gray-300 hover:text-white text-sm"
           >
             Terms &amp; Conditions
@@ -112,7 +109,7 @@ const footer = (props: Props) => {
         </li>
         <li>
           <a
-            href="javascript:void(0)"
+            href="#"
             className="text-gray-300 hover:text-white text-sm"
           >
             Privacy Policy

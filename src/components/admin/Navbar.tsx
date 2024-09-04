@@ -1,26 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-type Props = {}
+type Props = {
+  handleLogout: () => void;
+}
 
 const Navbar = (props: Props) => {
+  const [user, setUser] = useState<{info: string} | null>(null)
   const location = useLocation()
   const [active, setActive ]= useState("")
   useEffect(()=> {
-    console.log(location);
+    const userData: any = sessionStorage.getItem("user")
+  try {
+    if (userData){
+      setUser(JSON.parse(userData))
+    }
+  }
+  catch(error) {
+    console.log(error);
+    
+  }
+    console.log(location, "location");
     setActive(location.pathname)
   },[location])
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("user")
+    setUser(null)
+  }
   return (
 <>
 <nav className="bg-[#121e31] h-screen  top-0 left-0 min-w-[250px] py-6 px-4 font-[sans-serif] tracking-wide overflow-auto">
   <div className="flex flex-wrap items-center gap-4 cursor-pointer">
-    <img
+    {/* <img
       src="https://readymadeui.com/profile.webp"
       className="w-10 h-10 rounded-full border-2 border-white"
-    />
+    /> */}
     <div>
-      <p className="text-sm text-white">John Doe</p>
-      <p className="text-xs text-gray-300 mt-0.5">johndoe23@gmail.com</p>
+      
+      <p className="px-4 py-2 bg-white text-sm rounded-full font-bold text-gray-700 border-2 border-[#007bff]">{user?.info}</p>
     </div>
   </div>
   <hr className="my-6 border-gray-400" />
@@ -45,6 +63,26 @@ const Navbar = (props: Props) => {
       
       </NavLink>
     </li>
+    <li>
+    <NavLink to={'/admin/addcategory'} className={`text-white text-sm flex items-center hover:bg-gray-700 rounded px-4 py-3 transition-all
+      ${active === '/admin/addcategory'? 'bg-gray-700':''}`}>
+      
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          className="w-[18px] h-[18px] mr-4"
+          viewBox="0 0 511.414 511.414"
+        >
+          <path
+            d="M497.695 108.838a16.002 16.002 0 0 0-9.92-14.8L261.787 1.2a16.003 16.003 0 0 0-12.16 0L23.639 94.038a16 16 0 0 0-9.92 14.8v293.738a16 16 0 0 0 9.92 14.8l225.988 92.838a15.947 15.947 0 0 0 12.14-.001c.193-.064-8.363 3.445 226.008-92.837a16 16 0 0 0 9.92-14.8zm-241.988 76.886-83.268-34.207L352.39 73.016l88.837 36.495zm-209.988-51.67 71.841 29.513v83.264c0 8.836 7.164 16 16 16s16-7.164 16-16v-70.118l90.147 37.033v257.797L45.719 391.851zM255.707 33.297l55.466 22.786-179.951 78.501-61.035-25.074zm16 180.449 193.988-79.692v257.797l-193.988 79.692z"
+            data-original="#000000"
+          />
+        </svg>
+        <span>Category</span>
+      
+      </NavLink>
+    </li>
+
     <li>
     <NavLink to={'/admin/add'} className={`text-white text-sm flex items-center hover:bg-gray-700 rounded px-4 py-3 transition-all
       ${active === '/admin/add'? 'bg-gray-700':''}`}>
@@ -85,6 +123,22 @@ const Navbar = (props: Props) => {
         </svg>
         <span>Home</span>
       </NavLink>
+    </li>
+    <li>
+    <NavLink to={'/'} className="text-white text-sm flex items-center hover:bg-gray-700 rounded px-4 py-3 transition-all">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                className="w-[18px] h-[18px] mr-4"
+                viewBox="0 0 193.769 193.769"
+              >
+                <path
+                  d="m149.203 41.104-9.348 12.009c20.15 15.679 30.201 41.063 26.234 66.253-2.906 18.484-12.838 34.73-27.964 45.748-15.128 11.023-33.589 15.393-52.073 12.488C58.569 173.697 34.682 152.53 29.3 124.48c-2.273-11.498-1.645-23.287 1.761-34.208l17.081 7.288a57.35 57.35 0 0 0-.139 26.617c7.929 40.092 48.69 42.462 55.426 43.475 30.836 4.843 59.815-16.964 64.658-47.8 4.843-30.834-16.964-59.815-47.8-64.658-14.87-2.333-29.964.635-42.167 8.409l11.637 8.883c8.548-4.667 18.425-6.252 27.904-4.717 7.69 1.207 14.918 4.436 21.027 9.057L108.16 108.14l68.909 24.738-7.507-73.854z"
+                  data-original="#000000"
+                />
+              </svg>
+              <button onClick={handleLogout} className="ml-2">Logout</button>
+            </NavLink>
     </li>
     
     

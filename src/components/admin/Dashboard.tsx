@@ -19,11 +19,14 @@ const Dashboard = (props: Props) => {
       try {
         const data = await getAllproducts();
         setProduct(data);
+        console.log(data,  "data");
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
+    
+    
   }, []);
 
   const delProduct = async (id: string) => {
@@ -71,7 +74,7 @@ const Dashboard = (props: Props) => {
                 >
                   {product.name}
                 </th>
-                <td className="px-6 py-4">{product.category}</td>
+                <td className="px-6 py-4">{product?.category?.name}</td>
                 <td className="px-6 py-4">${product.price}</td>
                 <td className="px-6 py-4">
                   <div className="flex">

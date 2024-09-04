@@ -7,13 +7,13 @@ import {
 } from "../../service/products";
 import { IProductLite, Iproduct } from "../../interface/products";
 import { useNavigate, useParams } from "react-router-dom";
+import { upload } from "../../service/upload";
 
 type Props = {};
 
 const Update = (props: Props) => {
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
-  const [img, setImg] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [Products, setProducts] = useState<Iproduct[]>([]);
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const Update = (props: Props) => {
         form.setFieldsValue({
           name: response.name,
           price: response.price,
-          img: response.img,
+          // img: response.img,
           category: response.category,
         });
         console.log(response);
@@ -54,12 +54,14 @@ const Update = (props: Props) => {
     fetchProduct();
   }, []);
 
+
   const onFinish = async (values: any) => {
     console.log("Success:", values);
+    
 
     const product: any = await updateProduct(id, values);
     setName(product.name);
-    setImg(product.img);
+    
     setPrice(product.price);
     setCategory(product.category);
     alert("success")
@@ -110,42 +112,6 @@ const Update = (props: Props) => {
               <div className="absolute left-4"></div>
             </div>
 
-            <label className="mb-2 text-sm text-black block">Your Image:</label>
-            <div className="relative flex items-center">
-              <Form.Item
-                name="img"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Coffee image!",
-                  },
-                ]}
-              >
-                <Input
-                  className="pr-4 pl-14 py-3 text-sm text-black rounded bg-white border border-gray-400 w-full outline-[#333]"
-                  placeholder="Enter Coffee image"
-                />
-              </Form.Item>
-              <div className="absolute left-4"></div>
-            </div>
-
-            <div className="pt-[20px]">
-              <Form.Item
-                name="category"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Coffee image!",
-                  },
-                ]}
-              >
-                <Select
-                  labelRender={labelRender}
-                  style={{ width: "100%" }}
-                  options={options}
-                />
-              </Form.Item>
-            </div>
           </div>
           <button
             type="submit"
