@@ -18,8 +18,8 @@ const Login = (props: Props) => {
 
     try {
       const user = await UserLogin({ email, password });
-      if (!user || !user.email) {
-        // Handle failed login (e.g., API returned an error or the user object is not what was expected)
+      if (!user || !user.info) {
+      
         setMessage("Login failed: Invalid credentials");
         alert("Login failed");
         return;
