@@ -6,6 +6,7 @@ import { Iproduct } from "../interface/products";
 type Props = {};
 
 const Detail = (props: Props) => {
+  
   const { id } = useParams();
   const [products, setProduct] = useState<Iproduct>();
 

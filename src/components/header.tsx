@@ -23,7 +23,7 @@ const Header = (props: Props) => {
   return (
     <>
       <header className="flex bg-sky-100 shadow-md py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50">
-        <div className="flex flex-wrap items-center justify-between gap-5 w-full">
+        <div className="flex  items-center justify-between gap-5 w-full">
           <NavLink to={"/"}>
             <img src={logo} alt="logo" className="w-36" />
           </NavLink>
@@ -40,18 +40,28 @@ const Header = (props: Props) => {
             </div>
           </div>
 
-          <div className="flex max-lg:ml-auto space-x-3">
+          <div className=" items-center ">
             {user ? (
               <>
+              <div className="mt-[10px] items-center">
                 <span className="px-4 py-2 text-sm rounded-full font-bold text-gray-700 border-2 border-[#007bff]">
                   {user?.info}
                 </span>
+                <NavLink to={"/cart"}>
+                <button className="my-[9px] ml-[9px] px-4 py-1 border-2 font-bold border-[#007bff] rounded-full duration-300 hover:bg-transparent hover:text-[#007bff] ease-in-out">My cart</button>
+                </NavLink>
                 <button
                   onClick={handleLogout}
-                  className="px-4 py-2 text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]"
+                  className="px-4 py-2 ml-[9px] text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]"
                 >
                   Logout
                 </button>
+                
+              </div>
+                
+                
+
+                
               </>
             ) : (
               <>
@@ -61,7 +71,7 @@ const Header = (props: Props) => {
                   </button>
                 </NavLink>
                 <NavLink to={"/register"}>
-                  <button className="px-4 py-2 text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]">
+                  <button className="px-4 py-2 ml-[15px] text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]">
                     Sign up
                   </button>
                 </NavLink>

@@ -16,6 +16,7 @@ import Addcategory from "./components/admin/Category";
 import products from "./components/products";
 import ProductsPage from "./layout/ProductsPage";
 import Products from "./components/products";
+import Cart from "./components/cart";
 
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
 
           <Route path="/login" Component={Login}></Route>
           <Route path="/register" Component={Register}></Route>
+
+          <Route path="/cart" element={<Privaterouter><Cart/></Privaterouter>}></Route>
 
           <Route path="/admin" element={<Privaterouter><Admin/></Privaterouter>}>
             <Route path="dashboard" Component={Dashboard}></Route>
