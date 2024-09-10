@@ -17,11 +17,14 @@ import products from "./components/products";
 import ProductsPage from "./layout/ProductsPage";
 import Products from "./components/products";
 import Cart from "./components/cart";
+import { ShopContextProvider } from "./components/contexts/CartContext";
 
 
 function App() {
   return (
-    <>
+    <> 
+    {/* <div className="App"> */}
+    <ShopContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" Component={Home}>
@@ -49,6 +52,8 @@ function App() {
 
         </Routes>
       </BrowserRouter>
+      </ShopContextProvider>
+      {/* </div> */}
     </>
   );
 }
