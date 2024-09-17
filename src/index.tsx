@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AppProvider } from './components/contexts/app.context';
+import { Context } from './components/contexts/Context';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <AppProvider>
   <React.StrictMode>
-    <App />
+  <Context>
+      <App />
+    </Context>
   </React.StrictMode>
   </AppProvider>
 );

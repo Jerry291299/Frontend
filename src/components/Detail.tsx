@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductByID } from "../service/products";
 import { Iproduct } from "../interface/products";
-import { ShopContext } from "./contexts/CartContext";
+import { actions, Cartcontext } from "./contexts/Context";
 
 type Props = {};
 
@@ -10,13 +10,13 @@ const Detail = (props: Props) => {
   
   const { id } = useParams();
   const [products, setProduct] = useState<Iproduct>();
-  const shopContext = useContext(ShopContext);
+  const Globalstate = useContext(Cartcontext);
 
-  if (!shopContext) {
+  if (!Cartcontext) {
     return <div>Loading...</div>; 
   }
 
-  const { addToCart, cartItems } = shopContext;
+  
   // const cartItemCount = cartItems ? cartItems[Number(id)] : 0;
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +30,9 @@ const Detail = (props: Props) => {
     fetchData();
   }, [id]);
 
+  const dispatch = Globalstate.dispatch;
+  console.log(Globalstate);
+  
  
 
   console.log(products);
@@ -120,7 +123,7 @@ const Detail = (props: Props) => {
               <button
                 type="button"
                 className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-orange-400"
-                onClick={() => id && addToCart(Number(id))} 
+                onClick={() => dispatch({ type: actions.ADD, payload: products })}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
