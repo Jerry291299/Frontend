@@ -18,16 +18,15 @@ const Products = (props: Props) => {
         const data2 = await getAllCategories();
         setProduct(data1);
         setCategory(data2);
-        console.log(data1);
-        console.log(data2);
+        
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-    console.log(category, "category");
+    
   }, [setProduct, setCategory]);
-  console.log(products, "testtttt");
+
 
   return (
     <>

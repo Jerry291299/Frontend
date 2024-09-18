@@ -28,6 +28,7 @@ function App() {
           <Route path="/" Component={Home}>
             <Route path="/" Component={content}></Route>
             <Route path="product/:id" Component={Detail}></Route>
+            <Route path="cart" element={<Privaterouter><Cart/></Privaterouter>}></Route>
           </Route>
 
           <Route path="/Productspage" Component={ProductsPage}>
@@ -38,7 +39,7 @@ function App() {
           <Route path="/login" Component={Login}></Route>
           <Route path="/register" Component={Register}></Route>
 
-          <Route path="/cart" element={<Privaterouter><Cart/></Privaterouter>}></Route>
+          
 
           <Route path="/admin" element={<Privaterouter><Admin/></Privaterouter>}>
             <Route path="dashboard" Component={Dashboard}></Route>

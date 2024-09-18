@@ -5,7 +5,6 @@ import { IProductLite } from '../interface/products';
 export const getAllproducts = async () => {
   try{
     const {data} = await axiosservice.get('product')
-    console.log(data);
     return data    
   } catch (error) {
     console.log(error);

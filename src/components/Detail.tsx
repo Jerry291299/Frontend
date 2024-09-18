@@ -35,7 +35,7 @@ const Detail = (props: Props) => {
   
  
 
-  console.log(products);
+  
 
   return (
     <section className="py-12 sm:py-16">
@@ -123,7 +123,13 @@ const Detail = (props: Props) => {
               <button
                 type="button"
                 className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-orange-400"
-                onClick={() => dispatch({ type: actions.ADD, payload: products })}
+                onClick={() => {
+                  dispatch({ type: actions.ADD, payload: products })
+                  alert("thêm sp vào giỏ thành công")
+                console.log(products, "dispatch");
+                
+                }
+              }
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

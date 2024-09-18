@@ -13,10 +13,13 @@ export const Context = (props) => {
   const reducer = (state, action) => {
     switch (action.type) {
       case actions.ADD:
-        const existingItem = state.find((item) => action.payload.id === item.id);
+        const existingItem = state.find((item) => action.payload._id === item._id);
+        console.log(existingItem);
+        console.log(state, action , "stateDP"); 
+        
         if (existingItem) {
           return state.map((item) => 
-          item.id === actions.payload.id
+          item._id === action.payload._id
           ? { ...item, quantity: item.quantity + 1 }
           : item
           );
@@ -24,26 +27,24 @@ export const Context = (props) => {
           return [...state, { ...action.payload, quantity: 1 }]; 
         }
 
-      case actions.INCREASE:
-        return state.map((item) => {
-          if (item.id === action.payload.id) {
-            const quantity = item.quantity || 0; 
-            return { ...item, quantity: quantity + 1 };
-          }
-          return state;
-        });
+        case actions.INCREASE:
+          
+          return state.map((item) =>
+            item._id === action.payload._id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item 
+          );
 
-      case actions.DECREASE:
-        return state.map((item) => {
-          if (item.id === action.payload.id) {
-            const quantity = item.quantity || 0; 
-            return { ...item, quantity: quantity > 1 ? quantity - 1 : quantity }; 
-          }
-          return state;
-        });
+          case actions.DECREASE:
+            return state.map((item) =>
+              item.id === action.payload.id
+                ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
+                : item
+            );
+    
 
       case actions.REMOVE:
-        return state.filter((item) => item.id !== action.payload.id);
+        return state.filter((item) => item._id !== action.payload._id);
 
       default:
         return state;

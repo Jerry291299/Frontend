@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { IUser } from "../interface/user";
 import logo from "./img/Corgi Toys 1980.png";
 type Props = {};
 
 const Header = (props: Props) => {
   const [user, setUser] = useState<{ info: string } | null>(null);
+  const Navigate = useNavigate()
 
   useEffect(() => {
     const userData: any = sessionStorage.getItem("user");
     if (userData) {
       setUser(JSON.parse(userData));
     }
-    console.log(JSON.parse(userData));
+   
   }, []);
-  console.log(user, "user");
+  
 
   const handleLogout = () => {
     sessionStorage.removeItem("user");
     setUser(null);
+    Navigate("/")
   };
   return (
     <>
