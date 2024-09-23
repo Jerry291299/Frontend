@@ -37,7 +37,7 @@ export const Context = (props) => {
 
           case actions.DECREASE:
             return state.map((item) =>
-              item.id === action.payload.id
+              item._id === action.payload._id
                 ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
                 : item
             );

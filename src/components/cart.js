@@ -23,7 +23,7 @@ const Cart = () => {
           <div className="card border-2 flex items-center justify-between w-50 mb-4" key={index}>
             <img className="max-lg:w-full lg:w-[180px] rounded-lg object-cover" src={item.img} alt="" />
             <p className="font-manrope font-bold text-2xl leading-9 text-gray-900">{item.name}</p>
-            <p className="text-indigo-600 font-manrope font-bold text-2xl leading-9 text-right">{price} </p>
+            <p className="text-indigo-600 font-manrope font-bold text-2xl leading-9 text-right">{price} $</p>
             <div className="quantity">
               <button
               className="rounded-[50px] border border-gray-200 shadow-sm shadow-transparent p-2.5 flex items-center justify-center bg-white transition-all duration-500 hover:shadow-gray-200 hover:bg-gray-50 hover:border-gray-300 focus-within:outline-gray-300"

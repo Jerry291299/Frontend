@@ -31,7 +31,6 @@ const Detail = (props: Props) => {
   }, [id]);
 
   const dispatch = Globalstate.dispatch;
-  console.log(Globalstate);
   
  
 

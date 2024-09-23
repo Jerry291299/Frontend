@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllproducts } from "../service/products";
 import { getAllCategories } from "../service/category";
 import { Iproduct } from "../interface/products";
 import { Icategory } from "../interface/category";
+import { Cartcontext } from "./contexts/Context";
 type Props = {};
 
 const Products = (props: Props) => {
@@ -11,6 +12,7 @@ const Products = (props: Props) => {
   const [products, setProduct] = useState<Iproduct[]>([]);
   const [category, setCategory] = useState<Icategory[]>([]);
   const [page, setPage] = useState(1);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
