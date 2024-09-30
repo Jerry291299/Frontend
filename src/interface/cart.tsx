@@ -1,12 +1,18 @@
 import { IUserCart } from "./user";
 
 export interface Icart {
-    userId: IUserCart,
-    items:[
-        {
-            productId: string,
-            quantity:  number,
-        }
-    ]
+    userId: string;
+    items: {
+      productId: string;
+      quantity: number;
+    }[];
 }
-export type ICartLite = Pick<Icart,'userId' | 'items' >
+
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  img: string;
+}
+// export type ICartLite = Pick<Icart,'userId' | 'items' >

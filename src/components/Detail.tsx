@@ -3,20 +3,29 @@ import { useParams } from "react-router-dom";
 import { getProductByID } from "../service/products";
 import { Iproduct } from "../interface/products";
 import { actions, Cartcontext } from "./contexts/Context";
+import { addtoCart } from "../service/cart";
 
 type Props = {};
 
 const Detail = (props: Props) => {
-  
   const { id } = useParams();
   const [products, setProduct] = useState<Iproduct>();
   const Globalstate = useContext(Cartcontext);
+  const [user, setUser] = useState<string>("");
 
   if (!Cartcontext) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
-  
+  useEffect(() => {
+    const storedUserId = sessionStorage.getItem("user");
+    console.log("Retrieved userId:", storedUserId); // Debug log
+    if (storedUserId) {
+      setUser(storedUserId);
+    } else {
+      console.error("User ID not found in sessionStorage.");
+    }
+  }, []);
   // const cartItemCount = cartItems ? cartItems[Number(id)] : 0;
   useEffect(() => {
     const fetchData = async () => {
@@ -31,10 +40,6 @@ const Detail = (props: Props) => {
   }, [id]);
 
   const dispatch = Globalstate.dispatch;
-  
- 
-
-  
 
   return (
     <section className="py-12 sm:py-16">
@@ -122,33 +127,56 @@ const Detail = (props: Props) => {
               <button
                 type="button"
                 className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-orange-400"
-                onClick={() => {
-                  dispatch({ type: actions.ADD, payload: products })
-                  alert("thêm sp vào giỏ thành công")
-                console.log(products, "dispatch");
-                
-                }
-              }
+                onClick={async () => {
+                  // Retrieve user from sessionStorage
+                  const userString = sessionStorage.getItem("user");
+
+                  // Parse user string into an object
+                  const user = userString ? JSON.parse(userString) : null;
+
+                  if (!products || !products._id) {
+                    alert("Product ID is invalid.");
+                    return;
+                  }
+
+                  if (!user || !user.id) {
+                    alert("User ID is invalid or missing.");
+                    return;
+                  }
+
+                  const cartItem = {
+                    userId: user.id, // Access user.id now
+                    items: [
+                      {
+                        productId: String(products._id),
+                        name: products.name,
+                        price: products.price,
+                        img: products.img,
+                        quantity: 1,
+                      },
+                    ],
+                  };
+
+                  try {
+                    console.log("Adding to cart:", cartItem);
+
+                    // Call the add to cart API
+                    const response = await addtoCart(cartItem);
+
+                    // Dispatch the response to your context
+                    dispatch({ type: actions.ADD, payload: response });
+
+                    alert("Added to cart successfully");
+                  } catch (error) {
+                    console.error("Failed to add product to cart", error);
+                  }
+                }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="shrink-0 mr-3 h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
                 Add to cart
               </button>
             </div>
             <div className="term flex pt-[20px]">
-                <input className="mt-[3px]" type="checkbox" />
+              <input className="mt-[3px]" type="checkbox" />
               <div className="pl-[10px]">
                 I agree with the terms and conditions
               </div>

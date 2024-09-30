@@ -157,11 +157,7 @@ const Login = (props: Props) => {
                   <button
                     type="submit"
                     className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
-                    // onClick={() => {
-                    //   setIsAuthenticated(true);
-                    //   sessionStorage.setItem("isAuthenticated", "true");
-
-                    // }}
+                   
                   >
                     Sign in
                   </button>

@@ -5,22 +5,20 @@ import logo from "./img/Corgi Toys 1980.png";
 type Props = {};
 
 const Header = (props: Props) => {
-  const [user, setUser] = useState<{ info: string } | null>(null);
-  const Navigate = useNavigate()
+  const [user, setUser] = useState<{ info: string, id:string } | null>(null);
+  const Navigate = useNavigate();
 
   useEffect(() => {
     const userData: any = sessionStorage.getItem("user");
     if (userData) {
       setUser(JSON.parse(userData));
     }
-   
   }, []);
-  
 
   const handleLogout = () => {
     sessionStorage.removeItem("user");
     setUser(null);
-    Navigate("/")
+    Navigate("/");
   };
   return (
     <>
@@ -45,25 +43,22 @@ const Header = (props: Props) => {
           <div className=" items-center ">
             {user ? (
               <>
-              <div className="mt-[10px] items-center">
-                <span className="px-4 py-2 text-sm rounded-full font-bold text-gray-700 border-2 border-[#007bff]">
-                  {user?.info}
-                </span>
-                <NavLink to={"/cart"}>
-                <button className="my-[9px] ml-[9px] px-4 py-1 border-2 font-bold border-[#007bff] rounded-full duration-300 hover:bg-transparent hover:text-[#007bff] ease-in-out">My cart</button>
-                </NavLink>
-                <button
-                  onClick={handleLogout}
-                  className="px-4 py-2 ml-[9px] text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]"
-                >
-                  Logout
-                </button>
-                
-              </div>
-                
-                
-
-                
+                <div className="mt-[10px] items-center">
+                  <span className="px-4 py-2 text-sm rounded-full font-bold text-gray-700 border-2 border-[#007bff]">
+                    {user?.info}
+                  </span>
+                  <NavLink to={`/cart/${user.id}`}>
+                    <button className="my-[9px] ml-[9px] px-4 py-1 border-2 font-bold border-[#007bff] rounded-full duration-300 hover:bg-transparent hover:text-[#007bff] ease-in-out">
+                      My cart
+                    </button>
+                  </NavLink>
+                  <button
+                    onClick={handleLogout}
+                    className="px-4 py-2 ml-[9px] text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]"
+                  >
+                    Logout
+                  </button>
+                </div>
               </>
             ) : (
               <>
@@ -98,11 +93,7 @@ const Header = (props: Props) => {
       </header>
 
       <div className="Menu py-[20px] bg-sky-200 flex justify-center items-center">
-        {/* 
-        <div className="absolute left-0">
-          <div className="shopbycategory border-2 bg-sky-900 py-2 text-white px-4 rounded-xl">Shop by Categories</div>
-        </div> */}
-
+      
         <div className="">
           <ul className="lg:flex gap-x-5 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
             <li className="mb-6 hidden max-lg:block">
@@ -113,7 +104,8 @@ const Header = (props: Props) => {
               />
             </li>
             <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
-            <NavLink to={"/"}
+              <NavLink
+                to={"/"}
                 className="hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]"
               >
                 Home ﹀

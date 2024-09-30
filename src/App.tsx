@@ -28,7 +28,7 @@ function App() {
           <Route path="/" Component={Home}>
             <Route path="/" Component={content}></Route>
             <Route path="product/:id" Component={Detail}></Route>
-            <Route path="cart" element={<Privaterouter><Cart/></Privaterouter>}></Route>
+            <Route path="cart/:id" element={<Privaterouter><Cart/></Privaterouter>}></Route>
           </Route>
 
           <Route path="/Productspage" Component={ProductsPage}>

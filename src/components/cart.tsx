@@ -1,20 +1,52 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Cartcontext } from "./contexts/Context";
+import { getCartByID } from "../service/cart";
+import { CartItem } from "../interface/cart";
 
 
 const Cart = () => {
   const Globalstate = useContext(Cartcontext);
-  const state = Globalstate.state;
-  const dispatch = Globalstate.dispatch;
+  const {state, dispatch} = Globalstate;
+  const [userId, setUserId] = useState<string | null>(null)
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  const total = state.reduce((total, item) => {
+  useEffect(() => {
+    const userData = sessionStorage.getItem("user");
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      setUserId(parsedUser.id); // Assuming user.id is the userId
+    }
+  }, []);
+
+  useEffect(() => {
+    if(userId) {
+      const fetchCartData = async () => {
+        try {
+          const data = await getCartByID(userId)
+          if (data) {
+            setCartItems(data.items)
+          }
+        }
+        catch (error) {
+          console.log(error);
+          
+        }
+      }
+      fetchCartData()
+    }
+  },[userId])
+
+  console.log(userId, "userid day");
+  
+
+  // const total = state.reduce((total, item) => {
     
-    return total + item.price * item.quantity;
-  }, 0);
+  //   return total + item.price * item.quantity;
+  // }, 0);
   return (
     <div className="cart">
         <h1>test cart</h1>
-      {state.map((item, index) => {
+      {cartItems.map((item, index) => {
           const quantity = item.quantity ?? 0;
           const price = item.price ?? 0;
         return (
@@ -52,7 +84,7 @@ const Cart = () => {
       {state.length > 0 && (
         <div className="total flex">
           <h2>Tong tien: </h2>
-          <h2 className="pl-[20px]">{total} $</h2>
+          {/* <h2 className="pl-[20px]">{total} $</h2> */}
         </div>
       )}
     </div>
