@@ -26,3 +26,15 @@ export const getCartByID = async (id?: string) => {
     throw error;
   }
 };
+
+export const removeFromCart = async (userId: string, productId: string) => {
+  try {
+    const response = await axiosservice.delete(`/cart/remove`, {
+      data: { userId, productId }, // Send userId and productId in the request body
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error removing item from cart:", error);
+    throw error;
+  }
+};
